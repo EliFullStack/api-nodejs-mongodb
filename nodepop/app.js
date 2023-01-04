@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('./lib/connectMongoose');
+require('./routes/apiv1/anuncios');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,6 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * Api routes
+ */
+app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
 
 /**
  * Web site routes
