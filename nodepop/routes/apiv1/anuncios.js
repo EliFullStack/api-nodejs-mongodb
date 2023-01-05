@@ -16,4 +16,17 @@ router.get('/', async (req, res, next) => {
     }   
 });
 
+//POST /apiv1/anuncios (body=anuncioData)
+//creates a new ad
+router.post('/', async (req, res, next) => {
+    try {
+        const anuncioData = req.body;
+        const anuncio = new Anuncio(anuncioData);
+        const anuncioGuardado = await anuncio.save();
+        res.json({ result: anuncioGuardado});
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;
