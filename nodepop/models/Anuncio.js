@@ -10,6 +10,11 @@ const anuncioSchema = mongoose.Schema({
     tags: [String]
 });
 
+anuncioSchema.statics.list = function(filter) {
+    const query = Anuncio.find(filter);
+    return query.exec()
+};
+
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
 
 module.exports = Anuncio;
