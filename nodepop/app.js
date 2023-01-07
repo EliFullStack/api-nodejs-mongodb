@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const authMiddleware = require('./lib/authMiddleware');
+
 require('./lib/connectMongoose');
 require('./routes/apiv1/anuncios');
 
@@ -25,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Api routes
  */
-app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/apiv1/anuncios', authMiddleware, require('./routes/apiv1/anuncios'));
 
 /**
  * Web site routes
