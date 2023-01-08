@@ -1,15 +1,67 @@
 'use strict';
 
 const express = require('express');
-const router = express.Router();
-
 const Anuncio = require('../../models/Anuncio');
 
+const router = express.Router();
+
+
+
 //GET /apiv1/anuncios
-//returns list of ads without filters
+
 router.get('/', async (req, res, next) => {
     try {
-        const anuncios = await Anuncio.find();
+        //filters
+        const name = req.query.name;
+        const tag = req.query.tag;
+        const sale = req.query.sale;
+        const price = req.query.price;
+        
+        
+
+        //pagination
+        const skip = req.query.skip;
+        const limit = req.query.limit;
+
+        //fields selection
+        const fields = req.query.fields;
+
+        //sorting
+        const sort = req.query.sort;
+
+
+        const filter = {};
+
+        if (name) {
+            filter.name = new RegExp('^' +
+            req.query.name, "i");
+        }
+
+        if (sale) {
+            filter.sale = sale;
+        } 
+
+        if (tag === "lifestyle") {
+            filter.tags = tag;
+        }
+
+        if (tag === "work") {
+            filter.tags = tag;
+        }
+
+        if (tag === "motor") {
+            filter.tags = tag;
+        }
+
+        if (tag === "mobile") {
+            filter.tags = tag;
+        }
+
+        if (price) {
+            filter.price = price;
+        }
+
+        const anuncios = await Anuncio.list(filter, skip, limit, fields, sort);
         res.json({ results: anuncios});
     } catch (err) {
         next(err);
@@ -28,5 +80,6 @@ router.post('/', async (req, res, next) => {
         next(err);
     }
 });
+
 
 module.exports = router;
