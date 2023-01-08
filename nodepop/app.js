@@ -8,6 +8,7 @@ const authMiddleware = require('./lib/authMiddleware');
 
 require('./lib/connectMongoose');
 require('./routes/apiv1/anuncios');
+require('./routes/apiv1/tags');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Api routes
  */
 app.use('/apiv1/anuncios', authMiddleware, require('./routes/apiv1/anuncios'));
+app.use('/apiv1/tags', authMiddleware, require('./routes/apiv1/tags'));
+
 
 /**
  * Web site routes
